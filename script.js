@@ -387,9 +387,28 @@ async function shareWithCert() {
   try {
     const blob     = await generateCardBlob();
     const filename = `EDF_CERTIFICATE_${playerId}.png`;
-    downloadBlob(blob, filename);
-    openX(buildShareText(false));
-    labelEl.textContent = "✓ 保存+シェア！";
+    const file     = new File([blob], filename, { type: "image/png" });
+
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      // iOS / Android: ネイティブ共有シートで画像＋テキストをまとめて渡す
+      try {
+        await navigator.share({ files: [file], title: "EDF 緊急配属証明書", text: buildShareText(false) });
+        labelEl.textContent = "✓ シェアしました！";
+      } catch (e) {
+        if (e.name === "AbortError") {
+          labelEl.textContent = orig;
+          btn.disabled = false;
+          return;
+        }
+        downloadBlob(blob, filename);
+        labelEl.textContent = "✓ 保存しました！";
+      }
+    } else {
+      // Desktop: 画像ダウンロード＋X投稿画面を開く
+      downloadBlob(blob, filename);
+      openX(buildShareText(false));
+      labelEl.textContent = "✓ 保存+シェア！";
+    }
     setTimeout(() => { labelEl.textContent = orig; btn.disabled = false; }, 2200);
   } catch (e) {
     labelEl.textContent = orig;
