@@ -608,3 +608,41 @@ html, body {
   text-align: center;
   letter-spacing: 1px;
 }
+
+/* ============================================
+   STEP GUIDE（保存後に表示）
+   ============================================ */
+.step-guide {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  background: rgba(0, 255, 65, 0.04);
+  border: 1px solid #003300;
+  border-left: 3px solid var(--green);
+  animation: fadeSlide .3s ease;
+}
+.step-guide.visible { display: flex; }
+
+.step-guide-done {
+  font-family: var(--font-m);
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--green);
+}
+
+.step-guide-x-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 3px;
+  font-size: 15px;
+}
+
+.step-guide-note {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #555;
+  line-height: 1.6;
+}

@@ -172,6 +172,17 @@
       <div class="result-btns">
         <button class="btn-share" id="btnShare">SNSでシェアする</button>
         <button class="btn-save-result" id="btnSaveResult">緊急配属証明書を保存</button>
+
+        <!-- Step guide: 保存後に表示 -->
+        <div class="step-guide" id="saveStepGuide">
+          <div class="step-guide-done">✓ ① 証明書を保存しました</div>
+          <button class="btn-share step-guide-x-btn" id="btnOpenXResult">
+            <svg class="x-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>② Xを開いて投稿する</span>
+          </button>
+          <div class="step-guide-note">▶ Xの投稿画面で保存した画像を添付してください</div>
+        </div>
+
         <button class="btn-retry" id="btnRetry">▶ 再診断する</button>
       </div>
 
@@ -193,6 +204,17 @@
           <svg class="x-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           <span class="modal-btn-label">配属証明書付きSNSシェア</span>
         </button>
+
+        <!-- モーダル内ステップガイド: 保存後に表示 -->
+        <div class="step-guide" id="modalStepGuide">
+          <div class="step-guide-done">✓ ① 証明書を保存しました</div>
+          <button class="btn-share step-guide-x-btn" id="btnOpenXModal">
+            <svg class="x-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>② Xを開いて投稿する</span>
+          </button>
+          <div class="step-guide-note">▶ Xの投稿画面で保存した画像を添付してください</div>
+        </div>
+
         <button class="btn-share modal-x-btn" id="btnShareWithVideo">
           <svg class="x-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           <span class="modal-btn-label">動画付きSNSシェア</span>

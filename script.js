@@ -294,6 +294,11 @@ function openShareModal() {
 
 function closeShareModal() {
   document.getElementById("shareModal").classList.remove("active");
+  document.getElementById("modalStepGuide").classList.remove("visible");
+  const certBtn = document.querySelector("#btnShareWithCert .modal-btn-label");
+  if (certBtn) certBtn.textContent = "配属証明書付きSNSシェア";
+  const certBtnEl = document.getElementById("btnShareWithCert");
+  if (certBtnEl) certBtnEl.disabled = false;
 }
 
 // ---- Image Generation ----
@@ -336,17 +341,28 @@ async function saveCardImage() {
     const blob     = await generateCardBlob();
     const filename = `EDF_CERTIFICATE_${playerId}.png`;
     const file     = new File([blob], filename, { type: "image/png" });
+    let saved = false;
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
         await navigator.share({ files: [file], title: "EDF 緊急配属証明書" });
+        saved = true;
       } catch (e) {
-        if (e.name !== "AbortError") downloadBlob(blob, filename);
+        if (e.name === "AbortError") {
+          btn.textContent = orig;
+          btn.disabled = false;
+          return;
+        }
+        downloadBlob(blob, filename);
+        saved = true;
       }
     } else {
       downloadBlob(blob, filename);
+      saved = true;
     }
-    btn.textContent = "✓ 保存しました！";
-    setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2200);
+    if (saved) {
+      btn.textContent = "① 保存しました ✓";
+      showStepGuide("saveStepGuide", "btnOpenXResult");
+    }
   } catch (e) {
     btn.textContent = orig;
     btn.disabled = false;
@@ -394,26 +410,44 @@ async function shareWithCert() {
       try {
         await navigator.share({ files: [file], title: "EDF 緊急配属証明書", text: buildShareText(false) });
         labelEl.textContent = "✓ シェアしました！";
+        setTimeout(() => { labelEl.textContent = orig; btn.disabled = false; }, 2200);
       } catch (e) {
         if (e.name === "AbortError") {
           labelEl.textContent = orig;
           btn.disabled = false;
           return;
         }
+        // 共有失敗→ダウンロードしてステップガイドを表示
         downloadBlob(blob, filename);
-        labelEl.textContent = "✓ 保存しました！";
+        labelEl.textContent = "① 保存しました ✓";
+        showStepGuide("modalStepGuide", "btnOpenXModal");
       }
     } else {
-      // Desktop: 画像ダウンロード＋X投稿画面を開く
+      // Desktop: ダウンロード＋ステップガイドを表示
       downloadBlob(blob, filename);
-      openX(buildShareText(false));
-      labelEl.textContent = "✓ 保存+シェア！";
+      labelEl.textContent = "① 保存しました ✓";
+      showStepGuide("modalStepGuide", "btnOpenXModal");
     }
-    setTimeout(() => { labelEl.textContent = orig; btn.disabled = false; }, 2200);
   } catch (e) {
     labelEl.textContent = orig;
     btn.disabled = false;
   }
+}
+
+// ---- Step guide helper ----
+
+function showStepGuide(guideId, openBtnId) {
+  const guide = document.getElementById(guideId);
+  guide.classList.add("visible");
+  document.getElementById(openBtnId).onclick = () => openX(buildShareText(false));
+  guide.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function hideStepGuides() {
+  document.getElementById("saveStepGuide").classList.remove("visible");
+  document.getElementById("modalStepGuide").classList.remove("visible");
+  const saveBtn = document.getElementById("btnSaveResult");
+  if (saveBtn) saveBtn.textContent = "緊急配属証明書を保存";
 }
 
 function shareWithVideo() {
@@ -429,6 +463,7 @@ function sharePlain() {
 function resetDiagnosis() {
   closeShareModal();
   stopResultPv();
+  hideStepGuides();
   currentQ   = 0;
   scores     = { ranger: 0, wingdiver: 0, airraider: 0, fencer: 0 };
   resultData = null;
