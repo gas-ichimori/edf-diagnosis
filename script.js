@@ -360,7 +360,7 @@ async function saveCardImage() {
       saved = true;
     }
     if (saved) {
-      btn.textContent = "① 保存しました ✓";
+      btn.textContent = "保存しました ✓";
       showStepGuide("saveStepGuide", "btnOpenXResult");
     }
   } catch (e) {
@@ -419,13 +419,13 @@ async function shareWithCert() {
         }
         // 共有失敗→ダウンロードしてステップガイドを表示
         downloadBlob(blob, filename);
-        labelEl.textContent = "① 保存しました ✓";
+        labelEl.textContent = "保存しました ✓";
         showStepGuide("modalStepGuide", "btnOpenXModal");
       }
     } else {
       // Desktop: ダウンロード＋ステップガイドを表示
       downloadBlob(blob, filename);
-      labelEl.textContent = "① 保存しました ✓";
+      labelEl.textContent = "保存しました ✓";
       showStepGuide("modalStepGuide", "btnOpenXModal");
     }
   } catch (e) {
