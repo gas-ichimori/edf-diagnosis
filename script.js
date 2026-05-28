@@ -55,7 +55,7 @@ const QUESTIONS = [
 
 const TROOPS = {
   ranger: {
-    name: "レンジャー", nameEn: "RANGER", icon: "🪖",
+    name: "レンジャー", nameEn: "RANGER", icon: "sol_icon.png",
     comments: [
       "生還確率：極小。しかし司令部はあなたに最前線を命ずる。",
       "死ぬなよ。死んだら補充が面倒だ。——司令部より",
@@ -65,7 +65,7 @@ const TROOPS = {
     ]
   },
   wingdiver: {
-    name: "ウイングダイバー", nameEn: "WING DIVER", icon: "⚡",
+    name: "ウイングダイバー", nameEn: "WING DIVER", icon: "wingdiver_icon.png",
     comments: [
       "空を駆けろ。着地することは帰還を意味しない。",
       "電磁コア残量に注意せよ。切れたら落ちる。当然だが。",
@@ -75,7 +75,7 @@ const TROOPS = {
     ]
   },
   airraider: {
-    name: "エアレイダー", nameEn: "AIR RAIDER", icon: "📡",
+    name: "エアレイダー", nameEn: "AIR RAIDER", icon: "airrader_icon.png",
     comments: [
       "戦術眼良好。ただし要請が通らない場合は自力でなんとかしろ。",
       "ビークルは生き物ではない。壊れたら諦めろ。",
@@ -85,7 +85,7 @@ const TROOPS = {
     ]
   },
   fencer: {
-    name: "フェンサー", nameEn: "FENCER", icon: "🛡️",
+    name: "フェンサー", nameEn: "FENCER", icon: "fenser_icon.png",
     comments: [
       "重装甲で地球を支えろ。後退は許可しない。",
       "あなたが倒れた時、その後ろには何もない。",
@@ -243,7 +243,7 @@ function buildResult() {
 
   document.getElementById("resPlayerId").textContent  = playerId;
   document.getElementById("resDate").textContent      = dateStr;
-  document.getElementById("resTroopIcon").textContent = troop.icon;
+  document.getElementById("resTroopIcon").innerHTML = `<img src="${troop.icon}" alt="${troop.name}">`;
   document.getElementById("resTroopName").textContent = troop.name;
   document.getElementById("resTroopEn").textContent   = troop.nameEn;
   document.getElementById("resSurvival").textContent  = survival;
